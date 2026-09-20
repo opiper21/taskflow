@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import api from '../api/client'
 
+const DEMO_EMAIL = 'demo@taskflow.com'
+const DEMO_PASSWORD = 'Demo1234!'
+
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -11,13 +14,15 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const login = async (emailValue: string, passwordValue: string) => {
     setError('')
     setLoading(true)
 
     try {
-      const res = await api.post('/auth/login', { email, password })
+      const res = await api.post('/auth/login', {
+        email: emailValue,
+        password: passwordValue,
+      })
       localStorage.setItem('token', res.data.token)
       navigate('/dashboard')
     } catch (err) {
@@ -29,6 +34,11 @@ function Login() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    login(email, password)
   }
 
   return (
@@ -66,12 +76,25 @@ function Login() {
         >
           {loading ? 'Logging in...' : 'Log in'}
         </button>
+
+        <button
+          type="button"
+          onClick={() => login(DEMO_EMAIL, DEMO_PASSWORD)}
+          disabled={loading}
+          className="w-full py-2 rounded border border-indigo-400 text-indigo-300 font-semibold hover:bg-slate-700 disabled:opacity-50"
+        >
+          Try demo account
+        </button>
+        <p className="text-xs text-slate-500">
+          The first login may take up to a minute while the server wakes up.
+        </p>
+
         <p className="text-sm text-slate-400">
-        No account yet?{' '}
-        <Link to="/signup" className="text-indigo-400 hover:underline">
-        Sign up
-        </Link>
-       </p>
+          No account yet?{' '}
+          <Link to="/signup" className="text-indigo-400 hover:underline">
+            Sign up
+          </Link>
+        </p>
       </form>
     </div>
   )
