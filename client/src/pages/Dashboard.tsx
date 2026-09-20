@@ -77,7 +77,7 @@ function Dashboard() {
         </button>
       </header>
 
-      <main className="p-6">
+      <main className="mx-auto max-w-2xl p-6">
         <h2 className="text-2xl font-semibold text-white mb-4">Your tasks</h2>
 
         <form onSubmit={handleAddTask} className="flex gap-2 mb-6">
@@ -106,12 +106,14 @@ function Dashboard() {
             {tasks.map((task) => (
               <li
                 key={task._id}
-                className="flex items-center justify-between gap-3 p-4 rounded bg-slate-800 text-white"
+                className="flex flex-wrap items-center justify-between gap-3 p-4 rounded bg-slate-800 text-white"
               >
                 <span
-                  className={task.status === 'done' ? 'line-through text-slate-400' : ''}
-                >
-                  {task.title}
+                    className={`wrap-break-word ${
+                     task.status === 'done' ? 'line-through text-slate-400' : ''
+                        }`}
+                      >
+                     {task.title}
                 </span>
 
                 <div className="flex items-center gap-2">

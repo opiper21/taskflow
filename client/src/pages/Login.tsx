@@ -32,7 +32,7 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-slate-800 p-8 rounded-xl space-y-4"
